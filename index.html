@@ -8,19 +8,25 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
-
 <body>
     <div class="weather-container">
         <div class="header-text">
             <h1>How's the weather?</h1>
             <p>enter a location below:</p>
         </div>
+        <div class="input-box">
+            <input type="text" name="searchBar" id="searchBar">
+            <button id="search">Search</button>
+        </div>
         <div class="weather-details">
+            <p class="location-name"></p>
             <span class="material-symbols-outlined weather-icon" id="weather-icon-element">
             </span>
+            <div class="conditions-container">
+                <p class="weather-condition-simple"></p>
+                <span class="temp-number"></span>
+            </div>
         </div>
-        <input type="text" name="searchBar" id="searchBar">
-        <button id="search">Search</button>
     </div>
     <script src="script.js"></script>
 </body>
