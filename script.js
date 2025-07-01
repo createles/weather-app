@@ -1,6 +1,9 @@
 const searchBar = document.querySelector("#searchBar");
 const searchBtn = document.querySelector("#search");
 const weatherIconElement = document.querySelector("#weather-icon-element");
+const locationName = document.querySelector(".location-name");
+const weatherConditionSimple = document.querySelector(".weather-condition-simple");
+const tempNumber = document.querySelector(".temp-number");
 let selectedLocation = null;
 
 const visualCrossingIconMap = {
@@ -27,7 +30,7 @@ async function searchLocation(place) {
   try {
     const encodedUserLocation = encodeURIComponent(place);
     const locationQuery = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodedUserLocation}?unitGroup=metric&&include=days,hours,current&key=7LWNL9SWFWLZP9ARRA5CXXUN7&contentType=json`
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodedUserLocation}?unitGroup=metric&&include=hours,current&key=7LWNL9SWFWLZP9ARRA5CXXUN7&contentType=json`
     );
     if (!locationQuery.ok) {
       throw new Error("Error fetching data from the server.");
@@ -47,5 +50,8 @@ searchBtn.addEventListener("click", async () => {
     const iconName = locationData.currentConditions.icon;
     const googleIconName = visualCrossingIconMap[iconName] || visualCrossingIconMap["default"];
     weatherIconElement.textContent = googleIconName;
+    locationName.textContent = `in ${locationData.resolvedAddress}`;
+    weatherConditionSimple.textContent = `${locationData.currentConditions.conditions}`;
+    tempNumber.textContent = `with a temperature of ${locationData.currentConditions.temp}`;
 })
 
