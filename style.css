@@ -9,13 +9,14 @@ body {
     height: 100svh;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .weather-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 40vh;
+    transition: margin-top 1s ease-in-out;
 }
 
 .header-text {
@@ -26,4 +27,14 @@ body {
 
 #weather-icon-element {
     font-size: 80px;
+}
+
+.input-box {
+    margin: 1rem 0;
+}
+
+.weather-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
