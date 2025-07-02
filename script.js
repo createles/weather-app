@@ -4,6 +4,7 @@ const weatherIconElement = document.querySelector("#weather-icon-element");
 const locationName = document.querySelector(".location-name");
 const weatherConditionSimple = document.querySelector(".weather-condition-simple");
 const tempNumber = document.querySelector(".temp-number");
+const loadingBar = document.querySelector(".loading-bar");
 let selectedLocation = null;
 
 const visualCrossingIconMap = {
@@ -27,6 +28,8 @@ const visualCrossingIconMap = {
 };
 
 async function searchLocation(place) {
+  loadingBar.classList.remove("hidden");
+
   try {
     const encodedUserLocation = encodeURIComponent(place);
     const locationQuery = await fetch(
@@ -42,6 +45,8 @@ async function searchLocation(place) {
     return selectedLocation;
   } catch (error) {
     console.log(error);
+  } finally {
+    loadingBar.classList.add("hidden");
   }
 }
 
@@ -54,4 +59,17 @@ searchBtn.addEventListener("click", async () => {
     weatherConditionSimple.textContent = `${locationData.currentConditions.conditions}`;
     tempNumber.textContent = `with a temperature of ${locationData.currentConditions.temp}`;
 })
+
+searchBar.addEventListener("keydown", async (event) => {
+  if (event.key === "Enter") {
+    const locationData = await searchLocation(searchBar.value);
+    const iconName = locationData.currentConditions.icon;
+    const googleIconName =
+      visualCrossingIconMap[iconName] || visualCrossingIconMap["default"];
+    weatherIconElement.textContent = googleIconName;
+    locationName.textContent = `in ${locationData.resolvedAddress}`;
+    weatherConditionSimple.textContent = `${locationData.currentConditions.conditions}`;
+    tempNumber.textContent = `with a temperature of ${locationData.currentConditions.temp}`;
+  }
+});
 
